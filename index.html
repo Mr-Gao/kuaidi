@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>快递单号查询网站</h1>
+<input type="text"><button>查询</button>
+<h2></h2>
+<ul>
+
+</ul>
+<script>
+    // http://ali-deliver.showapi.com/showapi_expInfo?com=快递公司名&nu=单号
+
+    var button = document.querySelector('button');
+    var inp = document.querySelector('input');
+    var ul = document.querySelector('ul');
+    var h2 = document.querySelector('h2');
+
+    button.onclick = function () {
+        var ajax = new XMLHttpRequest();
+        var url = 'http://ali-deliver.showapi.com/showapi_expInfo?com=auto&nu='+inp.value;
+        ajax.open('get',url);
+        ajax.setRequestHeader('Authorization','APPCODE 1bcee04a3d674cfba00a7e01a4ec0e17');
+        ajax.send();
+        ajax.onreadystatechange = function () {
+            if(ajax.readyState === 4 && ajax.status === 200){
+                // 字符串转换成对象的方法
+                // JSON.parse()
+                // 对象转换成字符串的方法
+                // JSON.stringify()
+                // 75321429462615
+                var data = JSON.parse(ajax.responseText);
+
+                h2.innerHTML = data.showapi_res_body.expTextName;
+                var dataInfo = data.showapi_res_body.data;
+                var str = '';
+                for(var i = 0; i < dataInfo.length; i++){
+                    str += '<li>';
+                    str += '<p>日期：'+dataInfo[i].time+'</p>';
+                    str += '<p>'+dataInfo[i].context+'</p>';
+                    str += '</li>';
+                }
+                ul.innerHTML = str;
+            }else{
+                h2.innerHTML = '您输入的单号有问题';
+                ul.innerHTML = '';
+            }
+        }
+    }
+
+</script>
+
+</body>
+</html>
