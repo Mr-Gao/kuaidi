@@ -21,7 +21,7 @@
 
     button.onclick = function () {
         var ajax = new XMLHttpRequest();
-        var url = 'http://ali-deliver.showapi.com/showapi_expInfo?com=auto&nu='+inp.value;
+        var url = '//ali-deliver.showapi.com/showapi_expInfo?com=auto&nu='+inp.value;
         ajax.open('get',url);
         ajax.setRequestHeader('Authorization','APPCODE 1bcee04a3d674cfba00a7e01a4ec0e17');
         ajax.send();
